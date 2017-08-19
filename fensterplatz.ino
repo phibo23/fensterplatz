@@ -4,6 +4,7 @@
 #include "DHT.h"
 #include <math.h>
 #include <WiFiUdp.h>
+#include "secrets.h"
 
 //set up temp sensor
 #define DHTPIN 4     // what digital pin the DHT22 is conected to
@@ -23,11 +24,11 @@ WiFiUDP ntpUDP;
 NTPClient timeClient(ntpUDP, NTP_ADDRESS, NTP_OFFSET, NTP_INTERVAL);
 
 //a bunch of constants with paswords and tokens
-//const char* ssid     = ""; //Netzwerkname
-//const char* password = ""; //Passwort
+const char* ssid     = WIFI_SSID;
+const char* password = WIFI_PW;
 
-const char* api_key = ""; //replace this with your own at some point
-const char* thing_speak_twitter_api_key = ""; //replace this with your own at some point
+const char* thing_speak_channel_api_key = THINGSPEAK_CHANNEL_API_KEY;
+const char* thing_speak_twitter_api_key = THINGSPEAK_TWITTER_API_KEY;
 
 //bunch of variables
 int counter = 0;
@@ -140,7 +141,7 @@ void loop() {
   if (m < 1030 && h < 100 && t < 100) { //also, dont upload values if the NaN case happens
     for (int i = 1; i < 4; i++) {
       String url = "http://api.thingspeak.com/update?api_key=";
-      url.concat(api_key);
+      url.concat(thing_speak_channel_api_key);
       url.concat("&field");
       url.concat(i);
       url.concat("=");
