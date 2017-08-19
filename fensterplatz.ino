@@ -38,11 +38,11 @@ int randomnes = 20;
 //texts to tweet. All arrays are of equal length (5)
 int numberOfElemenst = 5;
 char* startupTweets[] = {"Hi.+Ich+bin+wach.", "Ja,+Ok.+geht+los.", "Wird+soeben+hochgefahren.+Geduld.+Geduld.", "Dwwwwwwwwwwwwwwwwwww", "And+here+we+go"};
-char* soilMoisLow[] = {"Hust+hust.+Schon+recht+trocken+die+Erde...", "Wenn+ichs+nicht+besser+wüsste+würd+ich+denken+das+ist+ne+Wüste.", "So+ne+Gieskanne+könnte+mal.", "So+gieße+er+mich+nun.+Hm...+das+klingt+ekeliger+als+es+gemeint+war.", "Wasser.+Mein+Königreich+für+Wasser."};
+char* soilMoisLow[] = {"Hust+hust.+Schon+recht+trocken+die+Erde...", "Wenn+ichs+nicht+besser+wüsste+würd+ich+denken+das+ist+ne+Wüste.", "So+ne+Gießkanne+könnte+mal.", "So+gieße+er+mich+nun.+Hm...+das+klingt+ekeliger+als+es+gemeint+war.", "Wasser.+Ein+Königreich+für+Wasser."};
 char* freshWater[] = {"Boa+Krass+Wasser!+Fett", "Nichts+ist+besser+als+ein+guter+drink.", "Gönn+Dir+Gluck+Gluck.", "Schöne+Sache.+Ich+mein+is+viel+langweilig,+aber+gieß+rein", "Geil+ich+könnt+fast+tauchen+gehen."};
-char* hightemp[] = {"It's+getting+hot+in+here+so+photosynthesis.", "HIER+KOMMT+DIE+SONNE!", "So hooooooooooot", "Here+comes+the+sun+dubidubidu+and+temperatures+above+30+degerees.", "Hällt ja keiner aus in dieser Hitze..."};
+char* hightemp[] = {"It's+getting+hot+in+here+so+photosynthesis.", "HIER+KOMMT+DIE+SONNE!", "So hooooooooooot", "Here+comes+the+sun+dubidubidu+and+temperatures+above+30+degerees.", "Hält ja keiner aus in dieser Hitze..."};
 char* tempannounce[] = {"At+the+beep+the+temperature+will+be+", "Temperatur+", "Aktuelle+Temperatur+", "Wie+warm+is+vong+Grad+her?+", "Temp:+"};
-char* humidityannounce[] = {"Luftefeuchtigkeit+bei:+", "Luftefeuchtigkeit+bei:+", "Luftefeuchtigkeit+bei:+", "Luftefeuchtigkeit+bei:+", "Luftefeuchtigkeit+bei:+"};
+char* humidityannounce[] = {"Luftfeuchtigkeit+bei:+", "Luftfeuchtigkeit+bei:+", "Luftfeuchtigkeit+bei:+", "Luftfeuchtigkeit+bei:+", "Luftfeuchtigkeit+bei:+"};
 
 int h2 = -1;
 int m2 = -1;
