@@ -114,7 +114,8 @@ void loop() {
   if (tweetText == "" && randNumber == 1) {
     //ein tweet über die erdfeuchtigkeit
     if (m > 1000 ) {
-      tweetText = soilMoisLow[random(numberOfElemenst)];
+// disabled because sensor is out of order
+//      tweetText = soilMoisLow[random(numberOfElemenst)];
     }
   }
 
