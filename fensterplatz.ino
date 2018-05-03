@@ -6,6 +6,8 @@
 #include <WiFiUdp.h>
 #include "secrets.h"
 
+#define ACTIVATE_TWITTER 0
+
 //set up temp sensor
 #define DHTPIN 4     // what digital pin the DHT22 is conected to
 #define DHTTYPE DHT22   // there are multiple kinds of DHT sensors
@@ -175,7 +177,7 @@ void loop() {
     }
   }
 
-  if (tweetText != "") {
+  if (tweetText != "" && ACTIVATE_TWITTER > 0) {
     http.begin("http://api.thingspeak.com/apps/thingtweet/1/statuses/update");
     http.addHeader("Content-Type", "application/x-www-form-urlencoded");
     http.addHeader("X-THINGSPEAKAPIKEY", thing_speak_twitter_api_key);
