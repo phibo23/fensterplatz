@@ -142,41 +142,44 @@ void loop() {
     }
   }
 
-  if (m < 1030 && h < 100 && t < 100) { //also, dont upload values if the NaN case happens
-    for (int i = 1; i < 4; i++) {
-      String url = "http://api.thingspeak.com/update?api_key=";
-      url.concat(thing_speak_channel_api_key);
-      url.concat("&field");
-      url.concat(i);
-      url.concat("=");
-      url.concat(round(values[(i - 1)]));
-      Serial.println(url);
-
-      http.begin(url); //HTTP
-
-      int httpCode = http.GET();
-
-      if (httpCode > 0) {
-
-
-        // HTTP header has been send and Server response header has been handled
-        Serial.printf("[HTTP] GET... code: %d\n", httpCode);
-
-        // file found at server
-        if (httpCode == HTTP_CODE_OK) {
-          String payload = http.getString();
-          Serial.println(payload);
-        }
-      } else {
-        Serial.printf("[HTTP] GET... failed, error: %s\n", http.errorToString(httpCode).c_str());
-      }
-
-      http.end();
-
-      delay(60000);
-
-    }
+  bool sendData = false;
+  String url = "http://api.thingspeak.com/update?api_key=";
+  url.concat(thing_speak_channel_api_key);
+  if (m < 1024) {
+    url.concat("&field1=");
+    url.concat(round(m));
+    sendData = true;
   }
+  if (h < 100) {
+    url.concat("&field2=");
+    url.concat(round(h));
+    sendData = true;
+  }
+  if (t < 100) {
+    url.concat("&field3=");
+    url.concat(round(t));
+    sendData = true;
+  }
+
+  if (sendData == true) {
+    Serial.println(url);
+    http.begin(url); //HTTP
+    int httpCode = http.GET();
+    if (httpCode > 0) {
+      // HTTP header has been send and Server response header has been handled
+      Serial.printf("[HTTP] GET... code: %d\n", httpCode);
+      // file found at server
+      if (httpCode == HTTP_CODE_OK) {
+        String payload = http.getString();
+        Serial.println(payload);
+      }
+    } else {
+      Serial.printf("[HTTP] GET... failed, error: %s\n", http.errorToString(httpCode).c_str());
+    }
+    http.end();
+  }
+
+  //delay(60000);
 
   if (tweetText != "" && ACTIVATE_TWITTER > 0) {
     http.begin("http://api.thingspeak.com/apps/thingtweet/1/statuses/update");
