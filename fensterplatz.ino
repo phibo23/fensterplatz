@@ -7,6 +7,7 @@
 #include "secrets.h"
 
 #define ACTIVATE_TWITTER 0
+#define INTERVAL 30000
 
 //set up temp sensor
 #define DHTPIN 4     // what digital pin the DHT22 is conected to
@@ -209,5 +210,5 @@ void loop() {
   }
 
   counter++;
-  delay(3600000);
+  delay(INTERVAL);
 }
