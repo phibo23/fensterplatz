@@ -110,6 +110,7 @@ void setup() {
 }
 
 void loop() {
+  uint32_t beginLoop = millis();
   Serial.println(counter);
   timeClient.update();
   tweetText = "";
@@ -230,8 +231,6 @@ void loop() {
     http.end();
   }
 
-  //delay(60000);
-
   if (tweetText != "" && ACTIVATE_TWITTER > 0) {
     http.begin("http://api.thingspeak.com/apps/thingtweet/1/statuses/update");
     http.addHeader("Content-Type", "application/x-www-form-urlencoded");
@@ -264,5 +263,6 @@ void loop() {
   }
 
   counter++;
-  delay(INTERVAL);
+  // adjust interval for loop duration
+  delay(INTERVAL - (millis() - beginLoop));
 }
