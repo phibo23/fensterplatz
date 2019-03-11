@@ -153,12 +153,12 @@ void loop() {
   //}
   if (h < 100) {
     url.concat("&field2=");
-    url.concat(round(h));
+    url.concat(h);
     sendData = true;
   }
   if (t < 100) {
     url.concat("&field3=");
-    url.concat(round(t));
+    url.concat(t);
     sendData = true;
   }
 
