@@ -145,11 +145,12 @@ void loop() {
   bool sendData = false;
   String url = "http://api.thingspeak.com/update?api_key=";
   url.concat(thing_speak_channel_api_key);
-  if (m < 1024) {
-    url.concat("&field1=");
-    url.concat(round(m));
-    sendData = true;
-  }
+  // disable moisture
+  // if (m < 1024) {
+  //  url.concat("&field1=");
+  //  url.concat(round(m));
+  //  sendData = true;
+  //}
   if (h < 100) {
     url.concat("&field2=");
     url.concat(round(h));
