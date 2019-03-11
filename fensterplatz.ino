@@ -1,19 +1,22 @@
 #include <ESP8266HTTPClient.h>
 #include <ESP8266WiFi.h>
 #include <NTPClient.h>
+#include <Adafruit_Sensor.h>
 #include "DHT.h"
+#include "DHT_U.h"
 #include <math.h>
 #include <WiFiUdp.h>
+
 #include "secrets.h"
 
 #define ACTIVATE_TWITTER 0
-#define INTERVAL 30000
+#define INTERVAL 10 * 60 * 1000
 
 //set up temp sensor
 #define DHTPIN 4     // what digital pin the DHT22 is conected to
 #define DHTTYPE DHT22   // there are multiple kinds of DHT sensors
 
-DHT dht(DHTPIN, DHTTYPE);
+DHT_Unified dht(DHTPIN, DHTTYPE);
 
 //analog read in for soil moisture sensor
 const int AnalogIn  = A0;
@@ -55,6 +58,32 @@ void setup() {
   Serial.begin(115200);
   delay(100);
 
+  // Initialize dht22.
+  dht.begin();
+  Serial.println(F("DHTxx Unified Sensor Example"));
+  // Print temperature sensor details.
+  sensor_t sensor;
+  dht.temperature().getSensor(&sensor);
+  Serial.println(F("------------------------------------"));
+  Serial.println(F("Temperature Sensor"));
+  Serial.print  (F("Sensor Type: ")); Serial.println(sensor.name);
+  Serial.print  (F("Driver Ver:  ")); Serial.println(sensor.version);
+  Serial.print  (F("Unique ID:   ")); Serial.println(sensor.sensor_id);
+  Serial.print  (F("Max Value:   ")); Serial.print(sensor.max_value); Serial.println(F("°C"));
+  Serial.print  (F("Min Value:   ")); Serial.print(sensor.min_value); Serial.println(F("°C"));
+  Serial.print  (F("Resolution:  ")); Serial.print(sensor.resolution); Serial.println(F("°C"));
+  Serial.println(F("------------------------------------"));
+  // Print humidity sensor details.
+  dht.humidity().getSensor(&sensor);
+  Serial.println(F("Humidity Sensor"));
+  Serial.print  (F("Sensor Type: ")); Serial.println(sensor.name);
+  Serial.print  (F("Driver Ver:  ")); Serial.println(sensor.version);
+  Serial.print  (F("Unique ID:   ")); Serial.println(sensor.sensor_id);
+  Serial.print  (F("Max Value:   ")); Serial.print(sensor.max_value); Serial.println(F("%"));
+  Serial.print  (F("Min Value:   ")); Serial.print(sensor.min_value); Serial.println(F("%"));
+  Serial.print  (F("Resolution:  ")); Serial.print(sensor.resolution); Serial.println(F("%"));
+  Serial.println(F("------------------------------------"));
+
   // We start by connecting to a WiFi network
   Serial.println();
   Serial.println();
@@ -92,11 +121,32 @@ void loop() {
   //code to read in the value
   float m = analogRead(AnalogIn);
   Serial.println(m);
-  float h = dht.readHumidity();
-  Serial.println(h);
-  // Read temperature as Celsius (the default)
-  float t = dht.readTemperature();
-  Serial.println(t);
+
+  sensors_event_t event;
+  
+  float h;
+  // Get humidity event and print its value.
+  dht.humidity().getEvent(&event);
+  if (isnan(event.relative_humidity)) {
+    Serial.println(F("Error reading humidity!"));
+  } else {
+    Serial.print(F("Humidity: "));
+    Serial.print(event.relative_humidity);
+    Serial.println(F("%"));
+    h = event.relative_humidity;
+  }
+  
+  float t;
+  // Get temperature event and print its value.
+  dht.temperature().getEvent(&event);
+  if (isnan(event.temperature)) {
+    Serial.println(F("Error reading temperature!"));
+  } else {
+    Serial.print(F("Temperature: "));
+    Serial.print(event.temperature);
+    Serial.println(F("°C"));
+    t = event.temperature;
+  }
 
   float values[3] = {m, h, t};
   HTTPClient http;
